@@ -8,7 +8,7 @@
 	<meta content="width=device-width, initial-scale=1" name="viewport">
   <meta content="noindex, nofollow" name="robots">
 	<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
-  <link href="<?php echo 'dist/bootswatch-5/' . (empty($this->config->item('theme')) || 'paper' == $this->config->item('theme') || 'readable' == $this->config->item('theme') ? 'flatly' : $this->config->item('theme')) . '/bootstrap.min.css'; ?>" rel="stylesheet" type="text/css">
+  <link href="<?php echo 'css/bootswatch-5/' . (empty($this->config->item('theme')) || 'paper' == $this->config->item('theme') || 'readable' == $this->config->item('theme') ? 'flatly' : $this->config->item('theme')) . '/bootstrap.min.css'; ?>" rel="stylesheet" type="text/css">
   <!-- start css template tags -->
   <link rel="stylesheet" type="text/css" href="css/login.min.css"/>
   <!-- end css template tags -->
