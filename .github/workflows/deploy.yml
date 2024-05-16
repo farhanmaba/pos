@@ -14,11 +14,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Deploy to Server
-      uses: burnett01/rsync-deployments@4.1
+    - uses: webfactory/ssh-agent@v0.5.3
       with:
-        switches: '-avzr --delete'
-        remote_path: '/home/geniusco/public_html/app.codepos.net'
-        remote_host: ${{ secrets.REMOTE_HOST }}
-        remote_user: ${{ secrets.REMOTE_USER }}
-        remote_key: ${{ secrets.REMOTE_KEY }}
+        ssh-private-key: ${{ secrets.REMOTE_KEY }}
+
+    - name: Deploy to Server
+      run: rsync -avzr --delete -e 'ssh -o StrictHostKeyChecking=no' ./ ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/home/geniusco/public_html/app.codepos.net
