@@ -1,4 +1,4 @@
-name: Deploy to Apache Server
+name: Deploy to Apache Server Test
 
 on:
   push:
