@@ -20,6 +20,11 @@ jobs:
 
     - name: Install rsync
       run: sudo apt-get update && sudo apt-get install -y rsync
+    
+    - name: Check rsync and PATH
+      run: |
+        echo "PATH: $PATH"
+        echo "rsync: $(which rsync)"
 
     - name: Deploy to Server
       run: rsync -avzr --delete -e 'ssh -o StrictHostKeyChecking=no' ./ ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/home/geniusco/public_html/app.codepos.net
