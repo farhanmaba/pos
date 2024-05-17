@@ -20,4 +20,4 @@ jobs:
 
     - name: Deploy to Server
       run: |
-        scp -r -o StrictHostKeyChecking=no ./ ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/home/geniusco/public_html/app.codepos.net
+        scp -rv -o StrictHostKeyChecking=no ./ ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/home/geniusco/public_html/app.codepos.net
