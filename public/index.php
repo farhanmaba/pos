@@ -66,7 +66,7 @@
 switch (ENVIRONMENT)
 {
 	case 'development':
-		error_reporting(-1); // -1 is same as E_ALL
+		error_reporting(-1);
 		ini_set('display_errors', 1);
 	break;
 

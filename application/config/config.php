@@ -19,7 +19,7 @@ $config['application_version'] = '3.3.9';
 | 
 | 
 */ 
-$config['commit_sha1'] = 'dev';
+$config['commit_sha1'] = 'c00ff2';
  
 /* 
 |-------------------------------------------------------------------------- 
@@ -359,7 +359,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = getenv('ENCRYPTION_KEY') ? getenv('ENCRYPTION_KEY') : 'point_of-sale/encription_key';
+$config['encryption_key'] = '0rabfzowai';
 
 /*
 |--------------------------------------------------------------------------
