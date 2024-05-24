@@ -1152,7 +1152,7 @@ class Sales extends Secure_Controller
 
 		$data = $this->xss_clean($data);
 
-		if($data['customer_id']){
+		if(isset($data['customer_id'])){
 			$report_data = $this->specific_customer('1820-08-05',date('Y-m-d'),$data['customer_id'],'complete','all');
 			$data = array_merge($data, $report_data);
 		}

@@ -665,7 +665,7 @@ if(isset($success))
 	</div>
 </div>
 
-<?php if($overall_summary_data) {?>
+<?php if(isset($overall_summary_data)) {?>
 <div id="table_holder">
 	<table id="table"></table>
 </div>
