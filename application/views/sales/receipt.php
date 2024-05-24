@@ -46,4 +46,8 @@ if (isset($error_message))
 
 <?php $this->load->view("sales/" . $this->config->item('receipt_template')); ?>
 
-<?php $this->load->view("partial/footer"); ?>
+</br>
+<div class="text-center">
+	https://codepos.net
+</div>
+<?php // $this->load->view("partial/footer"); ?>

@@ -384,7 +384,7 @@ class Customers extends Persons
 
 					$consent = $data[3] == '' ? 0 : 1;
 
-					if(sizeof($data) >= 16 && $consent)
+					if(sizeof($data) >= 1 && $consent)
 					{
 						$email = strtolower($data[4]);
 						$person_data = array(

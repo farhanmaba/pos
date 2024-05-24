@@ -1150,7 +1150,101 @@ class Sales extends Secure_Controller
 
 		$data = $this->xss_clean($data);
 
+		if($data['customer_id']){
+			$report_data = $this->specific_customer('1820-08-05',date('Y-m-d'),$data['customer_id'],'complete','all');
+			$data = array_merge($data, $report_data);
+		}
+
 		$this->load->view("sales/register", $data);
+	}
+
+	/*
+	@function 		: specific_customer
+	@params 		: start_date, end_date, customer_id, sale_type, payment_type 
+	@return 		: Sales and purchase reports data of customer  
+	*/ 
+	private function specific_customer($start_date, $end_date, $customer_id, $sale_type, $payment_type)
+	{
+		$inputs = array('start_date' => $start_date, 'end_date' => $end_date, 'customer_id' => $customer_id, 'sale_type' => $sale_type, 'payment_type' => $payment_type);
+		$this->load->model('reports/Specific_customer');
+		$model = $this->Specific_customer;
+		$model->create($inputs);
+		$headers = $this->xss_clean($model->getDataColumns());
+		$report_data = $model->getData($inputs);
+		$summary_data = array();
+		$details_data = array();
+		$details_data_rewards = array();
+		foreach($report_data['summary'] as $key => $row)
+		{
+			if($row['sale_status'] == CANCELED)
+			{
+				$button_key = 'data-btn-restore';
+				$button_label = $this->lang->line('common_restore');
+			}
+			else
+			{
+				$button_key = 'data-btn-delete';
+				$button_label = $this->lang->line('common_delete');
+			}
+			$summary_data[] = $this->xss_clean(array(
+				'id' => $row['sale_id'],
+				'type_code' => $row['type_code'],
+				'sale_date' => date($this->config->item('dateformat'), strtotime($row['sale_date'])),
+				'quantity' => to_quantity_decimals($row['items_purchased']),
+				'employee_name' => $row['employee_name'],
+				'subtotal' => to_currency($row['subtotal']),
+				'tax' => to_currency_tax($row['tax']),
+				'total' => to_currency($row['total']),
+				'cost' => to_currency($row['cost']),
+				'profit' => to_currency($row['profit']),
+				'payment_type' => $row['payment_type'],
+				'comment' => $row['comment'],
+				'edit' => anchor('sales/edit/'. $row['sale_id'], '<span class="glyphicon glyphicon-edit"></span>',
+					array('class'=>'modal-dlg print_hide', $button_key => $button_label, 'data-btn-submit' => $this->lang->line('common_submit'), 'title' => $this->lang->line('sales_update')))
+			));
+			foreach($report_data['details'][$key] as $drow)
+			{
+				$details_data[$row['sale_id']][] = $this->xss_clean(array(
+					$drow['name'],
+					$drow['category'],
+					$drow['serialnumber'],
+					$drow['description'],
+					to_quantity_decimals($drow['quantity_purchased']),
+					to_currency($drow['subtotal']),
+					to_currency_tax($drow['tax']),
+					to_currency($drow['total']),
+					to_currency($drow['cost']),
+					to_currency($drow['profit']),
+					$drow['discount_percent'].'%'));
+			}
+			if(isset($report_data['rewards'][$key]))
+			{
+				foreach($report_data['rewards'][$key] as $drow)
+				{
+					$details_data_rewards[$row['sale_id']][] = $this->xss_clean(array($drow['used'], $drow['earned']));
+				}
+			}
+		}
+
+		$customer_info = $this->Customer->get_info($customer_id);
+		
+		if(!empty($customer_info->company_name))
+		{
+			$customer_name ='[ '.$customer_info->company_name.' ]';
+		}
+		else
+		{
+			$customer_name = $customer_info->company_name;
+		}
+		$data = array(
+			'headers' => $headers,
+			'editable' => 'sales',
+			'summary_data' => $summary_data,
+			'details_data' => $details_data,
+			'details_data_rewards' => $details_data_rewards,
+			'overall_summary_data' => $this->xss_clean($model->getSummaryData($inputs))
+		);
+		return $data;
 	}
 
 	public function receipt($sale_id)
