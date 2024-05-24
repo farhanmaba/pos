@@ -41,6 +41,7 @@ $lang["customers_min"] = "Min. spent";
 $lang["customers_new"] = "New Customer";
 $lang["customers_none_selected"] = "You have not selected any customer(s) to delete.";
 $lang["customers_one_or_multiple"] = "Customer(s)";
+$lang["customers_phone_number"] = "Phone Number";
 $lang["customers_quantity"] = "Quantity";
 $lang["customers_stats_info"] = "Stats";
 $lang["customers_successful_adding"] = "You have successfully added customer";

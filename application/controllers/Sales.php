@@ -872,6 +872,7 @@ class Sales extends Secure_Controller
 			$data['last_name'] = $customer_info->last_name;
 			$data['customer_email'] = $customer_info->email;
 			$data['customer_address'] = $customer_info->address_1;
+			$data['customer_phone_number'] = $customer_info->phone_number;
 			if(!empty($customer_info->zip) || !empty($customer_info->city))
 			{
 				$data['customer_location'] = $customer_info->zip . ' ' . $customer_info->city . "\n" . $customer_info->state;
@@ -902,7 +903,8 @@ class Sales extends Secure_Controller
 			$data['customer_info'] = implode("\n", array(
 				$data['customer'],
 				$data['customer_address'],
-				$data['customer_location']
+				$data['customer_location'],
+				$data['customer_phone_number']
 			));
 
 			if($data['customer_account_number'])

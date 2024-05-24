@@ -35,6 +35,15 @@
 		<?php
 		}
 		?>
+	
+		<?php
+		if(isset($customer))
+		{
+		?>
+			<div id="customer-phone-number"><?php echo $this->lang->line('customers_phone_number').": ".$customer_phone_number; ?></div>
+		<?php
+		}
+		?>
 
 		<div id="sale_id"><?php echo $this->lang->line('sales_id').": ".$sale_id; ?></div>
 
