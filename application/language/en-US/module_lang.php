@@ -45,3 +45,5 @@ $lang["module_timeclocks"] = "";
 $lang["module_timeclocks_categories"] = "";
 $lang["module_timeclocks_categories_desc"] = "";
 $lang["module_timeclocks_desc"] = "";
+$lang["module_tickets"] = "Tickets";
+$lang["module_tickets_desc"] = "Manage and Create Tickets.";

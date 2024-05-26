@@ -15,6 +15,18 @@ class Migration_Ticketing extends CI_Migration {
 
 		execute_script(APPPATH . 'migrations/sqlscripts/tickets.sql');
 
+        $this->db->insert('modules', array(
+            'module_id' => 'tickets',
+            'sort' => 75,
+            'desc_lang_key' => 'module_tickets_desc',
+            'name_lang_key' => 'module_tickets'
+        ));
+		
+        $this->db->insert('permissions', array(
+            'module_id' => 'tickets',
+            'permission_id' => 'tickets'
+        ));
+
 		error_log('Migrating ticketing module completed');
 	}
 
