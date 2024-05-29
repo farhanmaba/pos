@@ -5,8 +5,8 @@
 -- Table structure for table `ospos_devices`
 CREATE TABLE IF NOT EXISTS `ospos_devices` (
   `id` INT(10) NOT NULL,
-  `type` VARCHAR(255) NOT NULL,
-  `serial` VARCHAR(255) DEFAULT NULL,
+  `device_name` VARCHAR(255) NOT NULL,
+  `serial_no` VARCHAR(255) DEFAULT NULL,
   `password` VARCHAR(255) DEFAULT NULL,
   `modified_by_id` INT(10) NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

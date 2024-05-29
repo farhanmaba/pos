@@ -19,36 +19,48 @@ class Tickets extends Secure_Controller
 
     public function save($ticket_id = -1)
     {
-        $status = $this->input->post('ticket_status');
-        $due_date = $this->input->post('ticket_due_date');
-        $due_date = $due_date ? date("Y-m-d H:i:s", strtotime($due_date)) : $due_date;
-        $device_data = array(
-            'type' => $this->input->post('device_type'),
-            'serial' => $this->input->post('device_serial'),
-            'password' => $this->input->post('device_password'),
+        $current_employee_id = $this->Employee->get_logged_in_employee_info()->person_id;
+
+        // Device Details
+        $new_device = array(
+            'device_name' => $this->input->post('device_name'),
+            'serial_no' => $this->input->post('serial_no'),
+            'password' => $this->input->post('password'),
+            'modified_by_id' => $current_employee_id,
         );
-        $current_user = $this->Employee->get_logged_in_employee_info();
+
+        $status = $this->input->post('status');
+
+        $due_date = $this->input->post('due_date');
+        $due_date = $due_date ? date("Y-m-d H:i:s", strtotime($due_date)) : $due_date;
+
         $ticket_data = array(
             'status' => $status,
-            'problem' => $this->input->post('ticket_problem'),
-            'initial_diagnosis' => $this->input->post('ticket_initial_diagnosis'),
+            'problem' => $this->input->post('problem'),
+            'initial_diagnosis' => $this->input->post('initial_diagnosis'),
             'due_date' => $due_date,
-            'labor_cost' => parse_decimals($this->input->post('ticket_labor_cost')),
-            'customer_id' => $this->input->post('ticket_customer_id'),
-            'assignee_id' => $this->input->post('ticket_assignee_id'),
-            'employee_id' => $current_user->person_id,
+            'labor_cost' => parse_decimals($this->input->post('labor_cost')),
+            'customer_id' => 2, // Need to connect it with customer
+            'assignee_id' => $this->input->post('assignee_id'),
+            'employee_id' => $current_employee_id,
+            'modified_by_id' => $current_employee_id,
         );
+
         if ($status == TICKET_STATUS['COMPLETED']){
             $ticket_data['completion_date'] = date('Y-m-d H:i:s');
         }
-        $this->Ticket->save($ticket_data, $device_data, $ticket_id);
+
+        $this->Ticket->save($ticket_data, $new_device, $ticket_id);
+        
         redirect('tickets');
     }
+
     public function view($ticket_id = -1)
     {
         $tickets = $this->Ticket->all([$ticket_id]);
         $this->_reload(!empty($tickets) ? $tickets[0] : null);
     }
+    
     private function _reload($ticket = null)
     {
         $data = array();

@@ -2,6 +2,7 @@
 
 if(!defined('BASEPATH')) exit('No direct script access allowed');
 
+// Define the ticket statuses in a table in database to make it expandable
 define('TICKET_STATUS', array(
     'NEW' => 0,
     'ASSIGNED' => 1,
@@ -35,11 +36,10 @@ class Ticket extends CI_Model
     {
         if ($ticket_id > 0){
         } else {
-            if ($this->db->insert($this->ticket_table, $ticket)){
-                $ticket_id = $this->db->insert_id();
-                $this->db->insert($this->device_table, $device);
+            if ($this->db->insert($this->device_table, $device)){
                 $device_id = $this->db->insert_id();
-                $this->db->update($this->ticket_table, array('device_id' => $device_id), array('id' => $ticket_id));
+                $ticket['device_id'] = $device_id;
+                $this->db->insert($this->ticket_table, $ticket);
             }
         }
     }
