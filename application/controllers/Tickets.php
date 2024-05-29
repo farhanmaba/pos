@@ -10,6 +10,8 @@ class Tickets extends Secure_Controller
     {
         parent::__construct('tickets');
         $this->load->model('Ticket');
+        $this->load->model('Employee');
+        $this->load->model('Tax');
     }
 
     public function index()
