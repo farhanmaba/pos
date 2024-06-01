@@ -1646,7 +1646,9 @@ class Reports extends Secure_Controller
 		$this->load->view('reports/tabular', $data);
 	}
 
-	//	Returns subtitle for the reports
+	// Returns subtitle for the reports
+	// This function is copied over to Sales Controller
+	// Any changes done here needs to be copied over
 	private function _get_subtitle_report($inputs)
 	{
 		$subtitle = '';

@@ -1150,32 +1150,32 @@ class Sales extends Secure_Controller
 			$data['customer_required'] = $this->lang->line('sales_customer_optional');
 		}
 
-		$data = $this->xss_clean($data);
-
 		if(isset($data['customer_id'])){
-			$report_data = $this->specific_customer('1820-08-05',date('Y-m-d'),$data['customer_id'],'complete','all');
+			$report_data = $this->specific_customer('1820-08-05',date('Y-m-d'),$data['customer_id'],'complete','all') ?? [];
 			$data = array_merge($data, $report_data);
 		}
+
+		$data = $this->xss_clean($data);
 
 		$this->load->view("sales/register", $data);
 	}
 
-	/*
-	@function 		: specific_customer
-	@params 		: start_date, end_date, customer_id, sale_type, payment_type 
-	@return 		: Sales and purchase reports data of customer  
-	*/ 
-	private function specific_customer($start_date, $end_date, $customer_id, $sale_type, $payment_type)
+	public function specific_customer($start_date, $end_date, $customer_id, $sale_type, $payment_type)
 	{
 		$inputs = array('start_date' => $start_date, 'end_date' => $end_date, 'customer_id' => $customer_id, 'sale_type' => $sale_type, 'payment_type' => $payment_type);
+
 		$this->load->model('reports/Specific_customer');
 		$model = $this->Specific_customer;
+
 		$model->create($inputs);
-		$headers = $this->xss_clean($model->getDataColumns());
+
+		$headers = $model->getDataColumns() ?? [];
 		$report_data = $model->getData($inputs);
+
 		$summary_data = array();
 		$details_data = array();
 		$details_data_rewards = array();
+
 		foreach($report_data['summary'] as $key => $row)
 		{
 			if($row['sale_status'] == CANCELED)
@@ -1188,10 +1188,11 @@ class Sales extends Secure_Controller
 				$button_key = 'data-btn-delete';
 				$button_label = $this->lang->line('common_delete');
 			}
+
 			$summary_data[] = $this->xss_clean(array(
 				'id' => $row['sale_id'],
 				'type_code' => $row['type_code'],
-				'sale_date' => date($this->config->item('dateformat'), strtotime($row['sale_date'])),
+				'sale_time' => to_datetime(strtotime($row['sale_time'])),
 				'quantity' => to_quantity_decimals($row['items_purchased']),
 				'employee_name' => $row['employee_name'],
 				'subtotal' => to_currency($row['subtotal']),
@@ -1204,12 +1205,13 @@ class Sales extends Secure_Controller
 				'edit' => anchor('sales/edit/'. $row['sale_id'], '<span class="glyphicon glyphicon-edit"></span>',
 					array('class'=>'modal-dlg print_hide', $button_key => $button_label, 'data-btn-submit' => $this->lang->line('common_submit'), 'title' => $this->lang->line('sales_update')))
 			));
+
 			foreach($report_data['details'][$key] as $drow)
 			{
 				$details_data[$row['sale_id']][] = $this->xss_clean(array(
 					$drow['name'],
 					$drow['category'],
-					$drow['serialnumber'],
+					$drow['item_number'],
 					$drow['description'],
 					to_quantity_decimals($drow['quantity_purchased']),
 					to_currency($drow['subtotal']),
@@ -1217,8 +1219,10 @@ class Sales extends Secure_Controller
 					to_currency($drow['total']),
 					to_currency($drow['cost']),
 					to_currency($drow['profit']),
-					$drow['discount_percent'].'%'));
+					($drow['discount_type'] == PERCENT)? $drow['discount'].'%':to_currency($drow['discount'])
+				));
 			}
+
 			if(isset($report_data['rewards'][$key]))
 			{
 				foreach($report_data['rewards'][$key] as $drow)
@@ -1229,7 +1233,6 @@ class Sales extends Secure_Controller
 		}
 
 		$customer_info = $this->Customer->get_info($customer_id);
-		
 		if(!empty($customer_info->company_name))
 		{
 			$customer_name ='[ '.$customer_info->company_name.' ]';
@@ -1238,7 +1241,10 @@ class Sales extends Secure_Controller
 		{
 			$customer_name = $customer_info->company_name;
 		}
+
 		$data = array(
+			'title' => $this->xss_clean($customer_info->first_name . ' ' . $customer_info->last_name . ' ' . $this->lang->line('reports_report')),
+			'subtitle' => $this->_get_subtitle_report(array('start_date' => $start_date, 'end_date' => $end_date)),
 			'headers' => $headers,
 			'editable' => 'sales',
 			'summary_data' => $summary_data,
@@ -1246,7 +1252,27 @@ class Sales extends Secure_Controller
 			'details_data_rewards' => $details_data_rewards,
 			'overall_summary_data' => $this->xss_clean($model->getSummaryData($inputs))
 		);
+
 		return $data;
+	}
+
+	// Returns subtitle for the reports
+	// This functions is copied over from the Reports Controller
+	// Any changes done here needs to be copied over
+	private function _get_subtitle_report($inputs)
+	{
+		$subtitle = '';
+
+		if(empty($this->config->item('date_or_time_format')))
+		{
+			$subtitle .= date($this->config->item('dateformat'), strtotime($inputs['start_date'])) . ' - ' .date($this->config->item('dateformat'), strtotime($inputs['end_date']));
+		}
+		else
+		{
+			$subtitle .= date($this->config->item('dateformat').' '.$this->config->item('timeformat'), strtotime(rawurldecode($inputs['start_date']))) . ' - ' . date($this->config->item('dateformat').' '.$this->config->item('timeformat'), strtotime(rawurldecode($inputs['end_date'])));
+		}
+
+		return $subtitle;
 	}
 
 	public function receipt($sale_id)
