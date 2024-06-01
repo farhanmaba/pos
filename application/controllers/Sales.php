@@ -1160,6 +1160,7 @@ class Sales extends Secure_Controller
 		$this->load->view("sales/register", $data);
 	}
 
+	// Customer sales history on cashe register page
 	public function specific_customer($start_date, $end_date, $customer_id, $sale_type, $payment_type)
 	{
 		$inputs = array('start_date' => $start_date, 'end_date' => $end_date, 'customer_id' => $customer_id, 'sale_type' => $sale_type, 'payment_type' => $payment_type);

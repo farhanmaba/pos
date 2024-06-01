@@ -933,6 +933,8 @@ $(document).ready(function() {
 	});
 
 	// Customer Sales since the beginning of time
+	// When you select a customer on the sales register page,
+	// It shows the sales history of that customer at the end
 	<?php $this->load->view('partial/bootstrap_tables_locale'); ?>
 
 	var details_data = <?php echo isset($details_data) ? json_encode($details_data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) : '[]'; ?>;
@@ -1011,6 +1013,7 @@ $(document).ready(function() {
 	});
 
 	init_dialog();
+	// Customer Sales history ends here
 });
 
 function check_payment_type()
