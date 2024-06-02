@@ -142,6 +142,7 @@ define('SALE_TYPE_INVOICE', 1);
 define('SALE_TYPE_WORK_ORDER', 2);
 define('SALE_TYPE_QUOTE', 3);
 define('SALE_TYPE_RETURN', 4);
+define('SALE_TYPE_REPAIR', 5);
 
 define('PERCENT', 0);
 define('FIXED', 1);

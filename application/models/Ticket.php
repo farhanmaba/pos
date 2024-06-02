@@ -14,6 +14,16 @@ define('TICKET_STATUS', array(
     'WAITING_PAYMENT' => 7
 ));
 
+// Define the device types in a table in database to make it expandable
+define('DEVICE_TYPE', array(
+    'MOBILE' => 0,
+    'DESKTOP' => 1,
+    'LAPTOP' => 2,
+    'CAMERA' => 3,
+    'DRONE' => 4,
+    'CONSOLE' => 5
+));
+
 class Ticket extends CI_Model
 {
     private $ticket_table = 'tickets';

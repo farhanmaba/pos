@@ -160,6 +160,10 @@ class Sales extends Secure_Controller
 		{
 			$this->sale_lib->set_sale_type(SALE_TYPE_INVOICE);
 		}
+		else if($mode == 'sale_repair')
+		{
+			$this->sale_lib->set_sale_type(SALE_TYPE_REPAIR);
+		}
 		else
 		{
 			$this->sale_lib->set_sale_type(SALE_TYPE_RETURN);
@@ -215,6 +219,10 @@ class Sales extends Secure_Controller
 		elseif($sale_type == SALE_TYPE_RETURN)
 		{
 			$this->sale_lib->set_mode('return');
+		}
+		elseif($sale_type == SALE_TYPE_REPAIR)
+		{
+			$this->sale_lib->set_mode('sale_repair');
 		}
 		else
 		{
@@ -750,6 +758,32 @@ class Sales extends Secure_Controller
 				$this->sale_lib->clear_all();
 			}
 		}
+		elseif($this->sale_lib->is_repair_mode())
+		{
+			// Save the repair to the sales table
+			$data['sale_status'] = COMPLETED;
+			$sale_type = SALE_TYPE_REPAIR;
+
+			$data['repair_mode'] = $this->lang->line('sales_repair');
+
+			$data['sale_id_num'] = $this->Sale->save($sale_id, $data['sale_status'], $data['cart'], $customer_id, $employee_id, $data['comments'], $invoice_number, $work_order_number, $quote_number, $sale_type, $data['payments'], $data['dinner_table'], $tax_details);
+
+			$data['sale_id'] = 'REPAIR ' . $data['sale_id_num'];
+
+			$data['cart'] = $this->sale_lib->sort_and_filter_cart($data['cart']);
+			$data = $this->xss_clean($data);
+
+			if($data['sale_id_num'] == -1)
+			{
+				$data['error_message'] = $this->lang->line('sales_transaction_failed');
+			}
+			else
+			{
+				$data['barcode'] = $this->barcode_lib->generate_receipt_barcode($data['sale_id']);
+				$this->load->view('sales/receipt', $data);
+				$this->sale_lib->clear_all();
+			}
+		}
 		else
 		{
 			// Save the data to the sales table
@@ -1017,6 +1051,11 @@ class Sales extends Secure_Controller
 			$data['mode_label'] = $this->lang->line('sales_return');
 			$data['customer_required'] = $this->lang->line('sales_customer_optional');
 		}
+		elseif($this->sale_lib->get_mode() == 'sale_repair')
+		{
+			$data['mode_label'] = $this->lang->line('sales_repair');
+			$data['customer_required'] = $this->lang->line('sales_customer_required');
+		}
 		else
 		{
 			$data['mode_label'] = $this->lang->line('sales_receipt');
@@ -1143,6 +1182,11 @@ class Sales extends Secure_Controller
 		{
 			$data['mode_label'] = $this->lang->line('sales_return');
 			$data['customer_required'] = $this->lang->line('sales_customer_optional');
+		}
+		elseif($this->sale_lib->get_mode() == 'sale_repair')
+		{
+			$data['mode_label'] = $this->lang->line('sales_repair');
+			$data['customer_required'] = $this->lang->line('sales_customer_required');
 		}
 		else
 		{

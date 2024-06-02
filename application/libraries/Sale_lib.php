@@ -42,6 +42,7 @@ class Sale_lib
 				$register_modes['sale_work_order'] = $this->CI->lang->line('sales_work_order');
 			}
 			$register_modes['sale_invoice'] = $this->CI->lang->line('sales_invoice');
+			$register_modes['sale_repair'] = $this->CI->lang->line('sales_repair');
 		}
 		$register_modes['return'] = $this->CI->lang->line('sales_return');
 		return $register_modes;
@@ -283,6 +284,11 @@ class Sale_lib
 	public function is_return_mode()
 	{
 		return ($this->CI->session->userdata('sales_mode') == 'return');
+	}
+
+	public function is_repair_mode()
+	{
+		return ($this->CI->session->userdata('sales_mode') == 'sale_repair');
 	}
 
 	public function is_work_order_mode()
