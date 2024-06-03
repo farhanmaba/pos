@@ -1354,6 +1354,7 @@ class Reports extends Secure_Controller
 		}
 		$sale_type_options['canceled'] = $this->lang->line('reports_canceled');
 		$sale_type_options['returns'] = $this->lang->line('reports_returns');
+		$sale_type_options['repairs'] = $this->lang->line('reports_repairs');
 
 		return $sale_type_options;
 	}

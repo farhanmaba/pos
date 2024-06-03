@@ -49,6 +49,7 @@ class Specific_customer extends Report
 		$this->db->select('sale_id,
 			MAX(CASE
 			WHEN sale_type = ' . SALE_TYPE_POS . ' && sale_status = ' . COMPLETED . ' THEN \'' . $this->lang->line('reports_code_pos') . '\'
+			WHEN sale_type = ' . SALE_TYPE_REPAIR . ' && sale_status = ' . COMPLETED . ' THEN \'' . $this->lang->line('reports_code_repair') . '\'
 			WHEN sale_type = ' . SALE_TYPE_INVOICE . ' && sale_status = ' . COMPLETED . ' THEN \'' . $this->lang->line('reports_code_invoice') . '\'
 			WHEN sale_type = ' . SALE_TYPE_WORK_ORDER . ' && sale_status = ' . SUSPENDED . ' THEN \'' . $this->lang->line('reports_code_work_order') . '\'
 			WHEN sale_type = ' . SALE_TYPE_QUOTE . ' && sale_status = ' . SUSPENDED . ' THEN \'' . $this->lang->line('reports_code_quote') . '\'
@@ -87,6 +88,7 @@ class Specific_customer extends Report
 			$this->db->where('sale_type', SALE_TYPE_POS);
 			$this->db->or_where('sale_type', SALE_TYPE_INVOICE);
 			$this->db->or_where('sale_type', SALE_TYPE_RETURN);
+			$this->db->or_where('sale_type', SALE_TYPE_REPAIR);
 			$this->db->group_end();
 		}
 		elseif($inputs['sale_type'] == 'sales')
@@ -115,6 +117,11 @@ class Specific_customer extends Report
 		{
 			$this->db->where('sale_status', COMPLETED);
 			$this->db->where('sale_type', SALE_TYPE_RETURN);
+		}
+		elseif($inputs['sale_type'] == 'repairs')
+		{
+			$this->db->where('sale_status', COMPLETED);
+			$this->db->where('sale_type', SALE_TYPE_REPAIR);
 		}
 
 		$this->db->group_by('sale_id');
@@ -163,6 +170,7 @@ class Specific_customer extends Report
 			$this->db->where('sale_type', SALE_TYPE_POS);
 			$this->db->or_where('sale_type', SALE_TYPE_INVOICE);
 			$this->db->or_where('sale_type', SALE_TYPE_RETURN);
+			$this->db->or_where('sale_type', SALE_TYPE_REPAIR);
 			$this->db->group_end();
 		}
 		elseif($inputs['sale_type'] == 'sales')
@@ -191,6 +199,11 @@ class Specific_customer extends Report
 		{
 			$this->db->where('sale_status', COMPLETED);
 			$this->db->where('sale_type', SALE_TYPE_RETURN);
+		}
+		elseif($inputs['sale_type'] == 'repairs')
+		{
+			$this->db->where('sale_status', COMPLETED);
+			$this->db->where('sale_type', SALE_TYPE_REPAIR);
 		}
 
 		return $this->db->get()->row_array();

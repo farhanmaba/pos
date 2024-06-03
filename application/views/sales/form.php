@@ -1,13 +1,14 @@
 <div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
+<div id="required_fields_message"><?php echo anchor('sales/receipt/'.$sale_info['sale_id'], $this->lang->line('sales_receipt'), array('target'=>'_blank', 'class'=>'', "style"=>"text-align:center"));?></div>
 
 <ul id="error_message_box" class="error_message_box"></ul>
 
 <?php echo form_open("sales/save/".$sale_info['sale_id'], array('id'=>'sales_edit_form', 'class'=>'form-horizontal')); ?>
 	<fieldset id="sale_basic_info">
-		<div class="form-group form-group-sm">
+		<!-- <div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('sales_receipt_number'), 'receipt_number', array('class'=>'control-label col-xs-3')); ?>
 			<?php echo anchor('sales/receipt/'.$sale_info['sale_id'], 'POS ' . $sale_info['sale_id'], array('target'=>'_blank', 'class'=>'control-label col-xs-8', "style"=>"text-align:left"));?>
-		</div>
+		</div> -->
 		
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('sales_date'), 'date', array('class'=>'control-label col-xs-3')); ?>

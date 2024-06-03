@@ -29,6 +29,7 @@ class Sale extends CI_Model
 
 		$this->db->select('
 				sales.sale_id AS sale_id,
+				sales.sale_type AS sale_type,
 				MAX(DATE(sales.sale_time)) AS sale_date,
 				MAX(sales.sale_time) AS sale_time,
 				MAX(sales.comment) AS comment,
