@@ -67,7 +67,8 @@ function get_sales_manage_table_headers()
 		array('amount_due' => $CI->lang->line('sales_amount_due')),
 		array('amount_tendered' => $CI->lang->line('sales_amount_tendered')),
 		array('change_due' => $CI->lang->line('sales_change_due')),
-		array('payment_type' => $CI->lang->line('sales_payment_type'))
+		array('payment_type' => $CI->lang->line('sales_payment')),
+		array('sale_type' => $CI->lang->line('sales_type'))
 	);
 
 	if($CI->config->item('invoice_enable') == TRUE)
@@ -90,6 +91,16 @@ function get_sale_data_row($sale)
 
 	$controller_name = $CI->uri->segment(1);
 
+	// Constants repeated in application/config/constants.php
+	$sale_type_constants = [
+        'POS',
+        'INV',
+        'W/O',
+        'Q',
+        'RET',
+        'REP',
+	];
+
 	$row = array (
 		'sale_id' => $sale->sale_id,
 		'sale_time' => to_datetime(strtotime($sale->sale_time)),
@@ -97,7 +108,8 @@ function get_sale_data_row($sale)
 		'amount_due' => to_currency($sale->amount_due),
 		'amount_tendered' => to_currency($sale->amount_tendered),
 		'change_due' => to_currency($sale->change_due),
-		'payment_type' => $sale->payment_type
+		'payment_type' => $sale->payment_type,
+		'sale_type' => $sale_type_constants[$sale->sale_type],
 	);
 
 	if($CI->config->item('invoice_enable'))

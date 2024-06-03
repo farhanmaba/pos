@@ -136,7 +136,8 @@ define('COMPLETED', 0);
 define('SUSPENDED', 1);
 define('CANCELED', 2);
 
-
+// Repeated at the end of the file
+// Repeated in application/helpers/tabular_helper.php
 define('SALE_TYPE_POS', 0);
 define('SALE_TYPE_INVOICE', 1);
 define('SALE_TYPE_WORK_ORDER', 2);
@@ -156,3 +157,29 @@ define('CASH_ADJUSTMENT_TRUE', 1);
 define('CASH_ADJUSTMENT_FALSE', 0);
 define('CASH_MODE_TRUE', 1);
 define('CASH_MODE_FALSE', 0);
+
+/*
+|--------------------------------------------------------------------------
+| Export Constants
+|--------------------------------------------------------------------------
+|
+| It's not the best to do this here
+| But ot begin, lets write the logic here
+|
+*/
+function getConstantName($value) {
+    $sale_type_constants = array(
+        SALE_TYPE_POS => 'SALE_TYPE_POS',
+        SALE_TYPE_INVOICE => 'SALE_TYPE_INVOICE',
+        SALE_TYPE_WORK_ORDER => 'SALE_TYPE_WORK_ORDER',
+        SALE_TYPE_QUOTE => 'SALE_TYPE_QUOTE',
+        SALE_TYPE_RETURN => 'SALE_TYPE_RETURN',
+        SALE_TYPE_REPAIR => 'SALE_TYPE_REPAIR',
+    );
+
+    if ( ! isset($sale_type_constants[$value])) {
+        return;
+    }
+
+    return $sale_type_constants[$value];
+}
