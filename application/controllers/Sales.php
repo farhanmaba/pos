@@ -1159,6 +1159,7 @@ class Sales extends Secure_Controller
 		$data['price_work_orders'] = $this->sale_lib->is_price_work_orders();
 
 		$data['pos_mode'] = $data['mode'] == 'sale' || $data['mode'] == 'return';
+		$data['repair_mode'] = $data['mode'] == 'sale_repair';
 
 		$data['quote_number'] = $this->sale_lib->get_quote_number();
 		$data['work_order_number'] = $this->sale_lib->get_work_order_number();
