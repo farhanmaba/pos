@@ -586,17 +586,22 @@ if(isset($success))
 			if($payments_cover_total || !$pos_mode)
 			{
 				$comment_box_rows = 2;
+				$comments_label = $this->lang->line('common_comments');
 
-				if (empty($comment) && $repair_mode) {
-					$comment = "Device name: \nSerial No: \nPassword: \nProblem: \nInitial Diagnosis: ";
-					$comment_box_rows = 6;
+				if ($repair_mode) {
+					$comments_label = $this->lang->line('sales_repair_notes');
+
+					if (empty($comment)) {
+						$comment = "Device name: \nSerial No: \nPassword: \nProblem: \nInitial Diagnosis: ";
+						$comment_box_rows = 6;
+					}
 				}
 			?>
 				<div class="container-fluid">
 					<div class="no-gutter row">
 						<div class="form-group form-group-sm">
 							<div class="col-xs-12">
-								<?php echo form_label($this->lang->line('common_comments'), 'comments', array('class'=>'control-label', 'id'=>'comment_label', 'for'=>'comment')); ?>
+								<?php echo form_label($comments_label, 'comments', array('class'=>'control-label', 'id'=>'comment_label', 'for'=>'comment')); ?>
 								<?php echo form_textarea(array('name'=>'comment', 'id'=>'comment', 'class'=>'form-control input-sm', 'value'=>$comment, 'rows'=>$comment_box_rows)); ?>
 							</div>
 						</div>

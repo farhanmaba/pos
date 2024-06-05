@@ -163,6 +163,7 @@ $lang["sales_register"] = "Sales Register";
 $lang["sales_remove_customer"] = "Remove Customer";
 $lang["sales_remove_discount"] = "";
 $lang["sales_repair"] = "Repair";
+$lang["sales_repair_notes"] = "Repair Notes";
 $lang["sales_return"] = "Return";
 $lang["sales_rewards"] = "Reward Points";
 $lang["sales_rewards_balance"] = "Reward Points Balance";
