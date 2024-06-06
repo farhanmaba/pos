@@ -628,6 +628,8 @@ class Sale extends CI_Model
 		{
 			$this->db->insert('sales', $sales_data);
 			$sale_id = $this->db->insert_id();
+
+			$this->db->insert('repair_status', ['sale_id' => $sale_id]);
 		}
 		else
 		{
