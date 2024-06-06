@@ -134,12 +134,46 @@
 			</div>
 		</div>
 		
+		<?php
+		$is_repair_sale = false;
+		$comment_line = $this->lang->line('sales_comment');
+		
+		if ($sale_info['sale_type'] == 5) {
+			$is_repair_sale = true;
+			$comment_line = $this->lang->line('sales_repair_notes');
+		}
+		?>
+		
 		<div class="form-group form-group-sm">
-			<?php echo form_label($this->lang->line('sales_comment'), 'comment', array('class'=>'control-label col-xs-3')); ?>
+			<?php echo form_label($comment_line, 'comment', array('class'=>'control-label col-xs-3')); ?>
 			<div class='col-xs-8'>
 				<?php echo form_textarea(array('name'=>'comment', 'value'=>$sale_info['comment'], 'id'=>'comment', 'class'=>'form-control input-sm'));?>
 			</div>
 		</div>
+
+		<?php
+		if($is_repair_sale)
+		{
+			$repair_statuses = [
+				'DRAFT' => 'DRAFT',
+				'ASSIGNED' => 'ASSIGNED',
+				'IN_PROGRESS' => 'IN_PROGRESS',
+				'RESOLVED' => 'RESOLVED',
+				'REVOKED' => 'REVOKED',
+				'ON_HOLD' => 'ON_HOLD',
+				'WAITING_PARTS' => 'WAITING_PARTS',
+				'WAITING_PAYMENT'=> 'WAITING_PAYMENT',
+			];
+		?>
+			<div class="form-group form-group-sm">
+				<?php echo form_label($this->lang->line('sales_repair_status'), 'repair_status', array('class'=>'control-label col-xs-3')); ?>
+				<div class='col-xs-8'>
+				<?php echo form_dropdown('repair_status', $repair_statuses, $sale_info['repair_status'], array('id'=>'repair_status', 'class'=>'form-control')); ?>
+				</div>
+			</div>
+		<?php
+		}
+		?>
 	</fieldset>
 <?php echo form_close(); ?>
 

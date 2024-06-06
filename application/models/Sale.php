@@ -50,7 +50,11 @@ class Sale extends CI_Model
 				MAX(IFNULL(payments.sale_payment_amount, 0)) AS amount_tendered,
 				(MAX(payments.sale_payment_amount)) - ($sale_total) AS change_due,
 				" . '
-				MAX(payments.payment_type) AS payment_type
+				MAX(payments.payment_type) AS payment_type,'
+				. 'CASE 
+					WHEN sales.sale_type = 5 THEN MAX((SELECT status FROM ospos_repair_status WHERE sale_id = sales.sale_id)) 
+					ELSE NULL
+				END AS repair_status
 		');
 
 		$this->db->from('sales_items AS sales_items');
@@ -176,6 +180,10 @@ class Sale extends CI_Model
 					(MAX(payments.sale_payment_amount)) - ($sale_total) AS change_due,
 					" . '
 					MAX(payments.payment_type) AS payment_type
+					CASE 
+						WHEN sales.sale_type = 5 THEN (SELECT status FROM ospos_repair_status WHERE sale_id = sales.sale_id) 
+						ELSE NULL
+					END AS repair_status
 			');
 		}
 
@@ -510,6 +518,15 @@ class Sale extends CI_Model
 	 */
 	public function update($sale_id, $sale_data, $payments)
 	{
+		// Save the repair sale status separately
+		if ($sale_data['repair_status'] != null) {
+			$this->db->where('sale_id', $sale_id);
+			$this->db->update('repair_status', ['status' => $sale_data['repair_status']]);
+		}
+
+		// Because repair status is in a separate table
+		unset($sale_data['repair_status']);
+
 		$this->db->where('sale_id', $sale_id);
 		$success = $this->db->update('sales', $sale_data);
 
@@ -1446,5 +1463,20 @@ class Sale extends CI_Model
 		}
 	}
 
+    /**
+     * Gets repair status for a given sale ID
+     * 
+     * @param int $sale_id The ID of the sale
+     * @return string|null The repair status or null if not found
+     */
+    public function get_repair_status($sale_id)
+    {
+		$this->db->from('repair_status');
+		$this->db->where('sale_id', $sale_id);
+
+        $row = $this->db->get();
+
+        return $row ? $row->status : null;
+    }
 }
 ?>

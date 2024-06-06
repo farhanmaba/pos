@@ -1055,6 +1055,8 @@ class Sales extends Secure_Controller
 		{
 			$data['mode_label'] = $this->lang->line('sales_repair');
 			$data['customer_required'] = $this->lang->line('sales_customer_required');
+
+			$data['repair_status'] = $sale_info['repair_status'];
 		}
 		else
 		{
@@ -1383,6 +1385,11 @@ class Sales extends Secure_Controller
 
 		$data['new_payment_options'] = $this->xss_clean($payment_options);
 
+		if($sale_info['sale_type'] == 5)
+		{
+			$data['repair_status'] = $sale_info['repair_status'];
+		}
+
 		$this->load->view('sales/form', $data);
 	}
 
@@ -1454,7 +1461,8 @@ class Sales extends Secure_Controller
 			'customer_id' => $this->input->post('customer_id') != '' ? $this->input->post('customer_id') : NULL,
 			'employee_id' => $this->input->post('employee_id') != '' ? $this->input->post('employee_id') : NULL,
 			'comment' => $this->input->post('comment'),
-			'invoice_number' => $this->input->post('invoice_number') != '' ? $this->input->post('invoice_number') : NULL
+			'invoice_number' => $this->input->post('invoice_number') != '' ? $this->input->post('invoice_number') : NULL,
+			'repair_status' => $this->input->post('repair_status') ?? NULL,
 		);
 
 		// In order to maintain tradition the only element that can change on prior payments is the payment type
