@@ -179,9 +179,9 @@ class Sale extends CI_Model
 					MAX(payments.sale_payment_amount) AS amount_tendered,
 					(MAX(payments.sale_payment_amount)) - ($sale_total) AS change_due,
 					" . '
-					MAX(payments.payment_type) AS payment_type
-					CASE 
-						WHEN sales.sale_type = 5 THEN (SELECT status FROM ospos_repair_status WHERE sale_id = sales.sale_id) 
+					MAX(payments.payment_type) AS payment_type,'
+					. 'CASE 
+						WHEN sales.sale_type = 5 THEN MAX((SELECT status FROM ospos_repair_status WHERE sale_id = sales.sale_id)) 
 						ELSE NULL
 					END AS repair_status
 			');
