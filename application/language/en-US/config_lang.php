@@ -315,6 +315,7 @@ $lang["config_tax_decimals"] = "Tax Decimals";
 $lang["config_tax_id"] = "Tax Id";
 $lang["config_tax_included"] = "Tax Included";
 $lang["config_theme"] = "Theme";
+$lang["config_theme_customization"] = "Theme Customization";
 $lang["config_theme_preview"] = "Preview Theme:";
 $lang["config_thousands_separator"] = "Thousands Separator";
 $lang["config_timezone"] = "Timezone";

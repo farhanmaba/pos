@@ -21,6 +21,26 @@
 			</div>
 
 			<div class="form-group form-group-sm">
+				<?php echo form_label($this->lang->line('config_theme_customization'), 'theme_customization', array('class' => 'control-label col-xs-2')); ?>
+				<div class='col-xs-8'>
+					<label class="radio-inline">
+						<?php echo form_radio(array(
+							'name' => 'theme_customization',
+							'value' => 'no',
+							'checked' => $this->config->item('theme_customization') == 'no')); ?>
+						<?php echo "No"; ?>
+					</label>
+					<label class="radio-inline">
+						<?php echo form_radio(array(
+							'name' => 'theme_customization',
+							'value' => 'yes',
+							'checked' => $this->config->item('theme_customization') == 'yes')); ?>
+						<?php echo "Yes"; ?>
+					</label>
+				</div>
+			</div>
+
+			<div class="form-group form-group-sm">
 				<?php echo form_label($this->lang->line('config_login_form'), 'login_form', array('class' => 'control-label col-xs-2')); ?>
 				<div class='col-xs-2'>
 					<?php echo form_dropdown('login_form', array(

@@ -83,6 +83,14 @@
 		<link rel="stylesheet" type="text/css" href="<?php echo 'css/' . $this->config->item('theme') . '.css' ?>"/>
 	<?php } ?>
 
+	<?php if ($this->config->item('theme_customization') === 'yes') { ?>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+		<!-- Custom Themes by CodePOS  -->
+		<link rel="stylesheet" type="text/css" href="<?php echo 'css/codepos_' . $this->config->item('theme_color') . '.css' ?>"/>
+	<?php } ?>
+
 		<!-- start minjs template tags -->
 		<script type="text/javascript" src="dist/opensourcepos.min.js?rel=5dfe5e6402"></script>
 		<!-- end minjs template tags -->
