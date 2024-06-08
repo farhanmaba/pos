@@ -592,7 +592,7 @@ if(isset($success))
 					$comments_label = $this->lang->line('sales_repair_notes');
 
 					if (empty($comment)) {
-						$comment = "Device name: \nSerial No: \nPassword: \nProblem: \nInitial Diagnosis: ";
+						$comment = $this->lang->line('sales_device_name') . ": \n" . $this->lang->line('sales_device_imei') . ": \n" . $this->lang->line('sales_device_password') . ": \n" . $this->lang->line('sales_device_warrenty_claim') . ": \n" . $this->lang->line('sales_device_issue') . ": ";
 						$comment_box_rows = 6;
 					}
 				}
