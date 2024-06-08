@@ -154,15 +154,15 @@
 		<?php
 		if($is_repair_sale)
 		{
+			// Keep em the same as the constants in application/config/constants.php
 			$repair_statuses = [
-				'DRAFT' => 'DRAFT',
-				'ASSIGNED' => 'ASSIGNED',
+				'CHECKED_IN' => 'CHECKED_IN',
 				'IN_PROGRESS' => 'IN_PROGRESS',
+				'SPECIAL_ORDER' => 'SPECIAL_ORDER',
+				'WAITING_ON_CUSTOMER' => 'WAITING_ON_CUSTOMER',
+				'WAITING_FOR_PAYMENT' => 'WAITING_FOR_PAYMENT',
+				'SHIPPED' => 'SHIPPED',
 				'RESOLVED' => 'RESOLVED',
-				'REVOKED' => 'REVOKED',
-				'ON_HOLD' => 'ON_HOLD',
-				'WAITING_PARTS' => 'WAITING_PARTS',
-				'WAITING_PAYMENT'=> 'WAITING_PAYMENT',
 			];
 		?>
 			<div class="form-group form-group-sm">

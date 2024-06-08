@@ -145,14 +145,14 @@ define('SALE_TYPE_QUOTE', 3);
 define('SALE_TYPE_RETURN', 4);
 define('SALE_TYPE_REPAIR', 5);
 
-define('DRAFT', 0);
-define('ASSIGNED', 1);
-define('IN_PROGRESS', 2);
-define('RESOLVED', 3);
-define('REVOKED', 4);
-define('ON_HOLD', 5);
-define('WAITING_PARTS', 6);
-define('WAITING_PAYMENT', 7);
+// Repeated in application/views/sales/form.php
+define('CHECKED_IN', 0);
+define('IN_PROGRESS', 1);
+define('SPECIAL_ORDER', 2);
+define('WAITING_ON_CUSTOMER', 3);
+define('WAITING_FOR_PAYMENT', 4);
+define('SHIPPED', 5);
+define('RESOLVED', 6);
 
 define('PERCENT', 0);
 define('FIXED', 1);
