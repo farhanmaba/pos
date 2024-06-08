@@ -88,7 +88,7 @@
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 
 		<!-- Custom Themes by CodePOS  -->
-		<link rel="stylesheet" type="text/css" href="<?php echo 'css/codepos_' . $this->config->item('theme_color') . '.css' ?>"/>
+		<link rel="stylesheet" type="text/css" href="<?php echo 'css/codepos_light.css' ?>"/>
 	<?php } ?>
 
 		<!-- start minjs template tags -->
