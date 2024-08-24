@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="<?php echo current_language_code(); ?>">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="<?php echo $this->config->item('company') . ' | ' . $this->lang->line('common_powered_by') . ' CodePOS ' . $this->config->item('application_version') ?>">
 	<base href="<?php echo base_url();?>" />
 	<title><?php echo $this->config->item('company') . ' | ' . $this->lang->line('common_powered_by') . ' CodePOS ' . $this->config->item('application_version') ?></title>
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
@@ -79,21 +81,18 @@
 		<!-- end mincss template tags -->
 
 		<!-- Tweaks to the UI for a particular theme should drop here  -->
-	<?php if ($this->config->item('theme') != 'flatly' && file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/css/' . $this->config->item('theme') . '.css')) { ?>
-		<link rel="stylesheet" type="text/css" href="<?php echo 'css/' . $this->config->item('theme') . '.css' ?>"/>
-	<?php } ?>
-
-	<?php if ($this->config->item('theme_customization') === 'yes') { ?>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-
-		<!-- Custom Themes by CodePOS  -->
-		<link rel="stylesheet" type="text/css" href="<?php echo 'css/codepos_light.css' ?>"/>
-	<?php } ?>
+		<?php if ($this->config->item('theme') != 'flatly' && file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/css/' . $this->config->item('theme') . '.css')) { ?>
+			<link rel="stylesheet" type="text/css" href="<?php echo 'css/' . $this->config->item('theme') . '.css' ?>"/>
+		<?php } ?>
 
 		<!-- start minjs template tags -->
 		<script type="text/javascript" src="dist/opensourcepos.min.js?rel=5dfe5e6402"></script>
 		<!-- end minjs template tags -->
+
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+		<!-- Custom Themes by CodePOS  -->
+		<link rel="stylesheet" type="text/css" href="<?php echo 'css/codepos_light.css' ?>"/>
 	<?php endif; ?>
 
 	<?php $this->load->view('partial/header_js'); ?>
@@ -107,7 +106,7 @@
 </head>
 
 <body>
-	<div class="wrapper">
+	  <div class="wrapper">
 		<div class="topbar">
 			<div class="container">
 				<div class="navbar-left">
