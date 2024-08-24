@@ -92,21 +92,26 @@
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 		<!-- Custom Themes by CodePOS  -->
-		<link rel="stylesheet" type="text/css" href="<?php echo 'css/codepos_light.css' ?>"/>
+		<link rel="stylesheet" type="text/css" href="<?php echo 'css/codepos_light.css'; ?>"/>
 	<?php endif; ?>
 
 	<?php $this->load->view('partial/header_js'); ?>
 	<?php $this->load->view('partial/lang_lines'); ?>
-
-	<style type="text/css">
-		html {
-			overflow: auto;
-		}
-	</style>
 </head>
 
 <body>
 	  <div class="wrapper">
+		<div class="content">
+			<div class="sidebar">
+				<div class="logo">
+					<img src="<?php echo base_url() . 'images/codepos-dark.png'; ?>" title="<?php echo $this->config->item('company'); ?>" alt="<?php echo $this->config->item('company'); ?>" />
+				</div>
+			</div>
+
+			<div class="main">
+			</div>
+		</div>
+
 		<div class="topbar">
 			<div class="container">
 				<div class="navbar-left">

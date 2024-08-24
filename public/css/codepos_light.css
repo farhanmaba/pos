@@ -1,0 +1,50 @@
+/* Colors */
+
+
+/* Margins */
+
+
+/* Padding */
+
+
+/* HTML Tags - General */
+*,
+html,
+body {margin: 0; padding: 0; box-sizing: border-box;}
+html {width: 100vw; height: 100vh;}
+body,
+.wrapper {width: 100%; height: 100%;}
+
+
+/* HTML Tags - All */
+
+
+/* Reusable Classes */
+.h-100 {height: 100%;}
+
+
+/* General Structure */
+.content {display: flex; align-items: stretch; height: 100%;}
+.main {width: calc(100% - 30rem);}
+.sidebar {width: 30rem;}
+
+
+/* Buttons */
+
+
+/* Modals */
+
+
+/* Inputs */
+
+
+/* Tables */
+
+
+/* Menu */
+
+
+/* Tabs */
+
+
+/* Sidebar */
